@@ -1,0 +1,12 @@
+###
+
+Send Request
+POST http:localhost:9000/register
+Content-Type: application/json
+
+{   
+    "user_name":"chinna",
+    "password": "8915467892",
+    "gender": "Male",
+    "email":"chinna.t301@gmail.com"
+}

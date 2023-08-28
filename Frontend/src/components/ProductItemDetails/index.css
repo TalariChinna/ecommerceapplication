@@ -1,0 +1,13 @@
+.product-list-container{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.load-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

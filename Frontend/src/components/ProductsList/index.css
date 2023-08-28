@@ -1,0 +1,73 @@
+.list-container{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 200px;
+    max-width: 250px;
+    flex-grow: 0;
+    flex-shrink: 1;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.link-item {
+    text-decoration: none;
+}
+.image-container{
+    width: 80%;
+    max-width: 210px;
+}
+.image{
+    width: 100%;
+    height: 200px;
+    max-width: 200px;
+    border-radius: 6px;
+}
+.details-container{
+    width: 80%;
+    max-width: 210px;
+}
+.brand-heading{
+    font-size: 14px;
+    font-family:sans-serif;
+    font-weight: bold;
+    color:darkgray;
+}
+.title{
+    font-size: 14px;
+    font-family:sans-serif;
+    color:lightslategray;
+}
+.selling-price{
+    font-size: 14px;
+    font-family:sans-serif;
+    color:black;   
+}
+.actual-price{
+    font-size: 14px;
+    font-family:sans-serif;
+    color:lightslategray; 
+    text-decoration: line-through; 
+}
+.discount{
+    font-size: 14px;
+    font-family:sans-serif;
+    color:limegreen;  
+}
+.rupee-icon{
+    font-size: 12px;
+}
+.price-container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0px;
+}
+.rating{
+    font-size: 14px;
+    font-family:sans-serif;
+    color:black;
+    margin-top: 0px;
+}

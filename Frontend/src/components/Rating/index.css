@@ -1,0 +1,12 @@
+.rating-list{
+    list-style: none;
+}
+.rating-button{
+    border-width: 0px;
+    background-color: transparent;
+    font-size: 18px;
+    color: black;
+}
+.active-rating-filter{
+    color: aqua;
+}
