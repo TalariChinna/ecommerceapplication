@@ -3,6 +3,7 @@ import {BrowserRouter,Routes,Route} from "react-router-dom"
 import Home from './components/Home'
 import Products from './components/Products'
 import ProductItemDetails from "./components/ProductItemDetails"
+import Cart from "./components/Cart"
 import Register from './components/Register' 
 import Login from './components/Login'
 
@@ -14,6 +15,7 @@ const App = () => (
       <Route exact path='/register' Component={Register}/>
       <Route exact path='/products' Component={Products}/>
       <Route exact path="/products/:id" Component={ProductItemDetails}/>
+      <Route exact path="/cart" Component={Cart}/>
       <Route exact path='/login' Component={Login}/>
       <Route exact path='/' Component={Home}/>
     </Routes>

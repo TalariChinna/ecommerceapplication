@@ -13,24 +13,25 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 85%;
+    width: 90%;
     max-width: 1110px;
-    padding-top: 25px;
-    padding-bottom: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     padding-left: 15px;
   }
   @media screen and (max-width: 767px) {
     .nav-content {
       flex-direction: column;
-      width: 100%;
-      padding-right: 15px;
+      width: 90%;
+      padding-right: 2px;
+      padding-left: 2px;
     }
   }
   
   .nav-bar-mobile-logo-container {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 90%;
   }
   
   @media screen and (min-width: 768px) {
@@ -46,12 +47,14 @@
   }
   
   .website-logo {
-    width: 120px;
+    width: 100%;
+    max-width: 250px;
   }
   
   @media screen and (min-width: 768px) {
     .website-logo {
-      width: 165px;
+      width: 100%;
+      max-width: 250px;
     }
   }
   
@@ -61,6 +64,7 @@
     justify-content: flex-end;
     align-self: flex-end;
     flex: 1;
+    min-height: 50px;
     list-style-type: none;
     margin-top: 0px;
     margin-bottom: 0px;

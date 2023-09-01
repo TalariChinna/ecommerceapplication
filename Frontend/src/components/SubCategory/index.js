@@ -1,21 +1,17 @@
-
+import "./index.css"
 const SubCategory = props=>{
-    
-   const {categoryObject,onCategoryFilter} = props;
+
+   const {categoryObject,onCategoryFilter,activeFilters} = props;
    const {categoryId,category} = categoryObject;
    
    const onCategory =()=>{
-    const activeCategory = document.getElementById(categoryId);
-    activeCategory.classList.toggle("checked");
-    console.log(activeCategory)
-    if(activeCategory.className==="checked"){
-        onCategoryFilter(category,categoryId,activeCategory)
-    }   
+    document.getElementById(categoryId).classList.add("category-active")
+    onCategoryFilter(category,categoryId)   
    }
     
 
    return(
-    <li><input id={categoryId} type="checkbox" onClick={onCategory}/>{category}</li>
+    <li id={categoryId} className={activeFilters.includes(category) ? "category category-active" : "category"} onClick={onCategory}>{category}</li>
    )
 }
 export default SubCategory

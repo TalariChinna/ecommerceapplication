@@ -1,15 +1,18 @@
+import "./index.css"
 const Discount = props =>{
-    const {DiscountItem,onDiscount} = props;
+    
+    const {DiscountItem,onDiscount,activeFilters} = props;
     const {discountId,discount} = DiscountItem;
+    
     const onDiscountFilter = ()=>{
-        const activeDiscount = document.getElementById(discountId);
-        activeDiscount.classList.toggle("Checked");
-        if(activeDiscount.className==="Checked"){
-            onDiscount(discountId,activeDiscount)
-        }
+        onDiscount(discountId) 
     }
+
     return(
-        <li><input id={discountId} type="checkbox" onClick={onDiscountFilter}/>{discount}</li>
+        <li id={discountId} 
+        className={(activeFilters.includes(discountId)) ? "rating-list active-rating" : "rating-list"} 
+        onClick={onDiscountFilter}>{discount}</li>
     )
 }
+
 export default Discount

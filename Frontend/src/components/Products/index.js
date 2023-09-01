@@ -1,11 +1,10 @@
 import { Component } from "react"
 import Header from "../Header"
-import ProductsList from '../ProductsList'
+import ProductsList from "../ProductsList"
 
 import SubCategory from "../SubCategory"
-import Discount from '../Discount'
+import Discount from "../Discount"
 import Rating from "../Rating"
-import Pagination from "../Pagination"
 import {ThreeDots} from "react-loader-spinner"
 
 import './index.css' 
@@ -28,36 +27,38 @@ const apiStatusConstants = {
     failure: "FAILURE",
     inProgress: "IN_PROGRESS",
 };
-
- 
+let currentItems ;
+let pages;
 
 class Products extends Component {
 
     state = {apiStatus:apiStatusConstants.initial,productsList:[],subCategory:[],rating:3,discount:25,
-        brand:'',order_by:'item_id',order:'asc',limit:40,offset:0
+        brand:'',order_by:'item_id',order:'asc',currentPage:1,itemsPerPage:40,
+        pageNumberLimit:10,maxPageNumberLimit:10,minPageNumberLimit:0,activeFilters:[]
     }
 
     componentDidMount(){
         this.getProducts()
     }
 
-    onRatingClick =(rating) =>{   
-        this.setState({rating:rating})
+    onRatingClick =(rating) =>{ 
+        const {activeFilters} = this.state  
+        
+        this.setState({rating:rating,activeFilters:[...activeFilters,rating]})
     }
     
-    onDiscount = (id)=>{
-       
-        this.setState({discount:id});
+    onDiscount = (discountId)=>{
+       const {activeFilters} = this.state
+        this.setState({discount:discountId,activeFilters:[...activeFilters,discountId]});
     }
     
     onCategoryFilter = (category)=>{
         
-        const {subCategory} = this.state;
+        const {subCategory,activeFilters} = this.state;
         const checkCategory = subCategory.includes(category)
-        
         if (checkCategory !== true){
             const updateCategory = [...subCategory,category]
-            this.setState({subCategory:updateCategory})
+            this.setState({subCategory:updateCategory,activeFilters:[...activeFilters,category]})
         }
     }
     
@@ -68,7 +69,7 @@ class Products extends Component {
     clearfilters=()=>{
        
         this.setState({
-            subCategory:"",rating:3,activeId:''},this.getProducts);
+            subCategory:"",rating:3,activeFilters:[]},this.getProducts);
     }
     brandFilter = (brandList) =>{
         this.setState({brand:brandList})
@@ -87,6 +88,7 @@ class Products extends Component {
         const dataFetching = await fetch(url,options)
         if(dataFetching.ok === true){
             const productsData = await dataFetching.json()
+            
             const updatedData = productsData.data.map(product => {
                 const oneImage =  product.images
                 const newArry = oneImage.split("'")
@@ -117,63 +119,110 @@ class Products extends Component {
         }
     }
 
-    renderFilterSection = () =>(
+    renderFilterSection = () =>{ 
+        const{activeFilters} = this.state;
+        
+        return( 
         <div className="filter-section">
-            <h1>Filters</h1>
+            <h1 className="filter">Filters</h1>
             <button onClick={this.filtersApply}>Apply Filters</button>
             <button onClick={this.clearfilters}>Clear Filters</button>
             <hr/>
-            <h1>SubCategory</h1>
-            <ul>
-                {categoryList.map(each=>(<SubCategory categoryObject={each} 
+            <h1 className="filter-heading">Category</h1>
+            <ul className="filter-heading-list">
+                {categoryList.map(each=>(<SubCategory categoryObject={each} activeFilters = {activeFilters}
                  onCategoryFilter={this.onCategoryFilter} key={each.categoryId}/>))}
             </ul>
-            <h1>Discount</h1>
-            <ul>{discountList.map(eachList=> ( 
+            <h1 className="filter-heading">Discount</h1>
+            <ul className="filter-heading-list">
+                {discountList.map(eachList=> ( 
                     <Discount 
                         DiscountItem={eachList}
                         key={eachList.discountId} 
+                        activeFilters={activeFilters}
                         onDiscount={this.onDiscount}
-                    />))}
+                    />
+                    ))
+                }
             </ul>
-            <h1>
+            <h1 className="filter-heading">
                 Customer Ratings
             </h1>
-            <ul>
+            <ul className="filter-heading-list">
                 {ratingList.map(eachList =>(    
                     <Rating 
                         RatingItem={eachList}
                         key={eachList.ratingId}
+                        activeFilters={activeFilters}
                         onRatingClick = {this.onRatingClick}
-                        clearfilters = {this.clearfilters}
                     />))
                 }
             </ul>
-            <ul>
-                {ratingList.map(ratingObject=>
-                    (<li className="rating-button" key={ratingObject.ratingId} onClick={this.onRatingClickNew}>
-                        {ratingObject.rating}</li>))}
-            </ul>
         </div>
-    )
+    )}
 
    renderFewMoreProducts =(id) =>{
     this.setState({currentPage:id})
    }
-    
+   
+   getProductsPerPage =  async(eachPage) => {
+        await this.setState({currentPage:eachPage})
+       
+        const{currentPage,maxPageNumberLimit,minPageNumberLimit} = this.state;
+        let updateMinPageNumber
+        let updateMaxPageNumber
+        console.log(currentPage)
+        if(currentPage >= maxPageNumberLimit){ 
+            updateMaxPageNumber = maxPageNumberLimit +  5;
+            updateMinPageNumber = minPageNumberLimit + 5
+            this.setState({maxPageNumberLimit:updateMaxPageNumber,minPageNumberLimit:updateMinPageNumber})
+        }else if(currentPage === (parseInt(minPageNumberLimit) + 1) && currentPage !== 1 ){
+            updateMinPageNumber = minPageNumberLimit - 5;
+            updateMaxPageNumber = minPageNumberLimit + 5
+            this.setState({minPageNumberLimit:updateMinPageNumber,maxPageNumberLimit:updateMaxPageNumber})
+        }
+   }
+
+    renderPagination =() =>{
+        const {productsList,itemsPerPage,currentPage,maxPageNumberLimit,minPageNumberLimit} = this.state;
+        
+        pages = [];
+         for( let i=1; i <= Math.ceil(productsList.length/itemsPerPage); i++ ) {
+            pages.push(i);
+        }
+       
+        return pages.map(eachPage=> { 
+             
+            if(eachPage < maxPageNumberLimit + 1 && eachPage > minPageNumberLimit){
+                
+                return (
+                    <li id={eachPage} key={eachPage} onClick={()=>this.getProductsPerPage(eachPage)}>
+                    <button className={currentPage === eachPage ? "button button-active":"button"}>{eachPage}
+                    </button></li>
+                    )
+            } 
+        });   
+    }
+
     renderProducts = () => { 
-        const{productsList} = this.state;
+        const{productsList,currentPage,itemsPerPage} = this.state;
+        const indexOfLastItem = currentPage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        currentItems = productsList.slice(indexOfFirstItem,indexOfLastItem)
+        
         return ( 
             <div>
                 <Header/>
                 <div className="products-filter-section">
                     {this.renderFilterSection()}
                     <div className="products-section">
+                        <p className="show-product-para">Showing {(currentItems.length*currentPage - currentItems.length + 1)} - {currentItems.length*currentPage} products of {productsList.length} products</p>
                         <ul className="product-list-container">
-                            {productsList.map((eachProduct) => (<ProductsList productItem={eachProduct} key={eachProduct.id}/>))}
+                            {currentItems.map((eachProduct) => (<ProductsList productItem={eachProduct} key={eachProduct.id}/>))}
                         </ul>
-                        <div>
-                            <Pagination allProducts = {productsList}/>
+                        <p className="page-no">Page {currentPage} of {Math.ceil(productsList.length/itemsPerPage)} pages</p>
+                        <div className="pagination-container">
+                            <ul className="pagination"> {this.renderPagination()}</ul>
                         </div>
                     </div>
                 </div>

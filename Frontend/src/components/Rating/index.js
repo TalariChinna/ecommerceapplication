@@ -1,7 +1,7 @@
 import './index.css'
 
 const Rating = props =>{
-    const {RatingItem,onRatingClick} = props;
+    const {RatingItem,onRatingClick,activeFilters} = props;
     const {rating,ratingId} = RatingItem
     
     const onRatingItem = () => {
@@ -9,7 +9,7 @@ const Rating = props =>{
         onRatingClick(rating) 
     }
     return(
-        <li className="rating-list"><button className="rating-button" id= {ratingId} onClick={onRatingItem}>{rating}</button></li>
+        <li className={activeFilters.includes(rating) ? "active-rating rating-list":"rating-list"} id= {ratingId} onClick={onRatingItem}>{rating} stars</li>
     )
 }
 export default Rating

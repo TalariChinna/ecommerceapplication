@@ -1,4 +1,4 @@
-.rating-list{
+.category{
     list-style: none;
     color: black;
     font-family: sans-serif;
@@ -7,8 +7,7 @@
     margin-bottom: 10px;
     margin-left: 2px;
 }
-
-.active-rating{
+.category-active{
     color: rgb(9, 61, 206);
     font-weight: bold;
 }

@@ -137,10 +137,8 @@ const ProductItemDetails =(props) =>{
        
         return (
             <div>
-                <div>
-                    <ProductInformation Product={productData} key={productData.productId}  />
-                </div>
-                <h1>SimilarProducts</h1>
+                <ProductInformation Product={productData} key={productData.productId}  />
+                <h1>Few More Products</h1>
                 <div>
                     <ul className="product-list-container">
                         {similarProducts.map(each => 

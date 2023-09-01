@@ -16,7 +16,7 @@ const Header = props => {
         <div className="nav-bar-mobile-logo-container">
           <img
             className="website-logo"
-            src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-logo-img.png"
+            src="https://res.cloudinary.com/ddypfxeyk/image/upload/v1693467759/Add_a_heading_pvmacz.png"
             alt="website logo"
           />
 
@@ -36,7 +36,7 @@ const Header = props => {
         <div className="nav-content nav-bar-large-container">
           <img
             className="website-logo"
-            src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-logo-img.png"
+            src="https://res.cloudinary.com/ddypfxeyk/image/upload/v1693467759/Add_a_heading_pvmacz.png"
             alt="website logo"
           />
           <ul className="nav-menu">

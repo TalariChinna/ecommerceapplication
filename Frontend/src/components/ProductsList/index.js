@@ -8,11 +8,11 @@ const ProductsList = props =>{
     const {title,actualPrice,id,rating,sellingPrice,brand,discount,images} = productItem;
     return(
         <Link to={`/products/${id}`}  className="link-item">
-            <li className="list-container">
-                <div className="image-container">
-                    <img className="image" src={images} alt="productimage"/>
+            <li className="list-container-small">
+                <div className="image-container-small">
+                    <img className="image-small" src={images} alt="productimage"/>
                 </div>    
-                <div className="details-container">
+                <div className="details-container-small">
                     <h1 className="brand-heading">{brand}</h1>
                     <p className="title">{title}</p>
                     <div className="price-container">
@@ -20,7 +20,7 @@ const ProductsList = props =>{
                         <p className="actual-price"><span className="rupee-icon"><BsCurrencyRupee/></span>{actualPrice}</p>
                         <p className="discount">{discount}</p>
                     </div>
-                    <p className="rating">Rating:{rating}</p>
+                    <p className="rating-small">Rating:{rating}</p>
                 </div>
             </li>
         </Link>

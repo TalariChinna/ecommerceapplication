@@ -80,11 +80,11 @@ app.post("/login", (request,response) =>{
 })
 
 app.get("/products", (request,response)=>{
-  const {subCategory,brand,discount,limit,offset,order_by,order,rating} = request.query;
+  const {subCategory,brand,discount,order_by,order,rating} = request.query;
   const split_of_elements = subCategory.split(",") 
  
   if(subCategory.length < 1){
-    const productList =  `select * from product_details where (sub_category like "%${subCategory}%" && brand like '%${brand}%' && (average_rating>=${rating}) && discount>=${discount}) order by ${order_by} ${order} limit ${limit} offset ${offset};`;
+    const productList =  `select * from product_details where (sub_category like "%${subCategory}%" && brand like '%${brand}%' && (average_rating>=${rating}) && discount>=${discount}) order by ${order_by} ${order};`;
     connection.query(productList ,(err,data)=>{
     if (err) throw err
     else{
@@ -100,7 +100,7 @@ app.get("/products", (request,response)=>{
     }
   })
   }else{
-    const productList =  `select * from product_details where (((sub_category = "${split_of_elements[0]}") || (sub_category = "${split_of_elements[1]}") || (sub_category = "${split_of_elements[2]}") || (sub_category = "${split_of_elements[3]}") || (sub_category = "${split_of_elements[4]}")) && brand like '%${brand}%' && (average_rating>=${rating}) && discount>=${discount}) order by ${order_by} ${order} limit ${limit} offset ${offset};`;
+    const productList =  `select * from product_details where (((sub_category = "${split_of_elements[0]}") || (sub_category = "${split_of_elements[1]}") || (sub_category = "${split_of_elements[2]}") || (sub_category = "${split_of_elements[3]}") || (sub_category = "${split_of_elements[4]}")) && brand like '%${brand}%' && (average_rating>=${rating}) && discount>=${discount}) order by ${order_by} ${order} ;`;
     connection.query(productList ,(err,data)=>{
     if (err) throw err
     else{
